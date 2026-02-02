@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starry Sky</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    }
+
+    /* ---------- 星星图层（三层不同大小/速度） ---------- */
+
+    .stars,
+    .stars-medium,
+    .stars-large {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    /* 小星星 —— 数量最多 */
+    .stars {
+      background-image:
+        radial-gradient(1px 1px at 50px 80px, #fff, transparent),
+        radial-gradient(1px 1px at 120px 200px, #fff, transparent),
+        radial-gradient(1px 1px at 300px 50px, #fff, transparent),
+        radial-gradient(1px 1px at 450px 320px, #fff, transparent),
+        radial-gradient(1px 1px at 80px 400px, #fff, transparent),
+        radial-gradient(1px 1px at 600px 150px, #fff, transparent),
+        radial-gradient(1px 1px at 700px 280px, #fff, transparent),
+        radial-gradient(1px 1px at 200px 600px, #fff, transparent),
+        radial-gradient(1px 1px at 900px 100px, #fff, transparent),
+        radial-gradient(1px 1px at 150px 750px, #fff, transparent),
+        radial-gradient(1px 1px at 500px 500px, #fff, transparent),
+        radial-gradient(1px 1px at 850px 450px, #fff, transparent),
+        radial-gradient(1px 1px at 1000px 300px, #fff, transparent),
+        radial-gradient(1px 1px at 1100px 550px, #fff, transparent),
+        radial-gradient(1px 1px at 350px 900px, #fff, transparent),
+        radial-gradient(1px 1px at 750px 700px, #fff, transparent),
+        radial-gradient(1px 1px at 1200px 200px, #fff, transparent),
+        radial-gradient(1px 1px at 50px 950px, #fff, transparent),
+        radial-gradient(1px 1px at 1300px 400px, #fff, transparent),
+        radial-gradient(1px 1px at 400px 150px, #fff, transparent),
+        radial-gradient(1px 1px at 950px 800px, #fff, transparent),
+        radial-gradient(1px 1px at 1050px 50px, #fff, transparent),
+        radial-gradient(1px 1px at 250px 350px, #fff, transparent),
+        radial-gradient(1px 1px at 650px 600px, #fff, transparent),
+        radial-gradient(1px 1px at 1150px 750px, #fff, transparent),
+        radial-gradient(1px 1px at 550px 850px, #fff, transparent),
+        radial-gradient(1px 1px at 100px 550px, #fff, transparent),
+        radial-gradient(1px 1px at 800px 50px, #fff, transparent),
+        radial-gradient(1px 1px at 1250px 650px, #fff, transparent),
+        radial-gradient(1px 1px at 350px 480px, #fff, transparent);
+      background-size: 1400px 1000px;
+      animation: twinkle 4s ease-in-out infinite alternate;
+    }
+
+    /* 中等星星 */
+    .stars-medium {
+      background-image:
+        radial-gradient(1.5px 1.5px at 100px 150px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 400px 350px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 700px 100px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 250px 500px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 550px 700px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 900px 250px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 1050px 600px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 150px 800px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 1200px 150px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 600px 450px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 800px 550px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 350px 200px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 1100px 400px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 50px 650px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 950px 850px, #fff, transparent);
+      background-size: 1400px 1000px;
+      animation: twinkle 5s ease-in-out 1s infinite alternate;
+    }
+
+    /* 大星星 */
+    .stars-large {
+      background-image:
+        radial-gradient(2px 2px at 200px 300px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2px 2px at 600px 200px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2px 2px at 1000px 500px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2px 2px at 300px 700px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2px 2px at 800px 800px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2px 2px at 1150px 300px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2.5px 2.5px at 500px 100px, rgba(255,220,180,0.95), transparent),
+        radial-gradient(2.5px 2.5px at 1300px 700px, rgba(180,220,255,0.95), transparent);
+      background-size: 1400px 1000px;
+      animation: twinkle 6s ease-in-out 2s infinite alternate;
+    }
+
+    /* ---------- 闪烁动画 ---------- */
+
+    @keyframes twinkle {
+      0%   { opacity: 0.6; }
+      50%  { opacity: 1;   }
+      100% { opacity: 0.7; }
+    }
+
+    /* ---------- 流星 ---------- */
+
+    .shooting-star {
+      position: fixed;
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(to right, rgba(255,255,255,0), #fff);
+      border-radius: 50%;
+      filter: drop-shadow(0 0 4px #fff);
+      opacity: 0;
+    }
+
+    .shooting-star::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      width: 4px;
+      height: 4px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 6px 2px rgba(255,255,255,0.8);
+      transform: translate(50%, -25%);
+    }
+
+    .shooting-star:nth-child(1) {
+      top: 10%;
+      left: 60%;
+      transform: rotate(-35deg);
+      animation: shoot 6s 1s ease-out infinite;
+    }
+
+    .shooting-star:nth-child(2) {
+      top: 25%;
+      left: 30%;
+      width: 90px;
+      transform: rotate(-25deg);
+      animation: shoot 8s 4s ease-out infinite;
+    }
+
+    .shooting-star:nth-child(3) {
+      top: 5%;
+      left: 80%;
+      width: 150px;
+      transform: rotate(-40deg);
+      animation: shoot 7s 7s ease-out infinite;
+    }
+
+    .shooting-star:nth-child(4) {
+      top: 35%;
+      left: 50%;
+      width: 100px;
+      transform: rotate(-30deg);
+      animation: shoot 9s 11s ease-out infinite;
+    }
+
+    @keyframes shoot {
+      0%   { opacity: 0; transform: rotate(-35deg) translate(0, 0); }
+      2%   { opacity: 1; }
+      15%  { opacity: 0; transform: rotate(-35deg) translate(-300px, 180px); }
+      100% { opacity: 0; }
+    }
+
+    /* ---------- 月亮 ---------- */
+
+    .moon {
+      position: fixed;
+      top: 8%;
+      right: 12%;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 40%, #ffeedd, #ffd699);
+      box-shadow:
+        0 0 20px rgba(255,214,153,0.4),
+        0 0 60px rgba(255,214,153,0.2),
+        0 0 120px rgba(255,214,153,0.1);
+    }
+
+    .moon::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 12px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.06);
+    }
+
+    .moon::after {
+      content: "";
+      position: absolute;
+      bottom: 20px;
+      right: 15px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.05);
+    }
+
+    /* ---------- 地面剪影 ---------- */
+
+    .ground {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 18%;
+      background:
+        linear-gradient(
+          135deg,
+          #0a0c12 25%,
+          transparent 25%
+        ),
+        linear-gradient(
+          160deg,
+          #0d0f17 40%,
+          transparent 40%
+        ),
+        linear-gradient(to top, #0a0c12 60%, transparent);
+      z-index: 1;
+    }
+
+    .ground::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(ellipse at 20% 100%, #0f1220 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 100%, #0e1018 0%, transparent 50%);
+    }
+
+    /* ---------- 标题文字 ---------- */
+
+    .title {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      text-align: center;
+      color: #fff;
+      font-family: 'Georgia', serif;
+      user-select: none;
+    }
+
+    .title h1 {
+      font-size: 3rem;
+      font-weight: 300;
+      letter-spacing: 0.6em;
+      text-shadow: 0 0 30px rgba(255,255,255,0.3);
+      animation: fadeIn 3s ease-out forwards;
+      opacity: 0;
+    }
+
+    .title p {
+      margin-top: 1rem;
+      font-size: 1rem;
+      letter-spacing: 0.3em;
+      color: rgba(255,255,255,0.5);
+      animation: fadeIn 3s 1s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 三层星星 -->
+  <div class="stars"></div>
+  <div class="stars-medium"></div>
+  <div class="stars-large"></div>
+
+  <!-- 流星 -->
+  <div class="shooting-star"></div>
+  <div class="shooting-star"></div>
+  <div class="shooting-star"></div>
+  <div class="shooting-star"></div>
+
+  <!-- 月亮 -->
+  <div class="moon"></div>
+
+  <!-- 地面 -->
+  <div class="ground"></div>
+
+  <!-- 标题 -->
+  <div class="title">
+    <h1>STARRY SKY</h1>
+    <p>Pure HTML + CSS Starry Night</p>
+  </div>
+
+</body>
+</html>
