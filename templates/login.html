@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>后台管理系统 - 登录</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="login-page">
+  <form class="login-card" method="post" action="/login">
+    <h1>后台管理系统</h1>
+    <p class="subtitle">默认账号：admin / 123456</p>
+    <p class="error">{{error}}</p>
+    <label>账号<input name="username" required></label>
+    <label>密码<input name="password" type="password" required></label>
+    <button type="submit">登录</button>
+  </form>
+</body>
+</html>
